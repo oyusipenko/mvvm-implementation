@@ -4,6 +4,9 @@
   "description": "How we create a fast-test architecture from scratch.",
   "keywords": [],
   "main": "src/index.js",
+  "engines": {
+    "node": "16.x"
+  },
   "dependencies": {
     "mobx": "6.3.10",
     "mobx-react": "7.2.1",
