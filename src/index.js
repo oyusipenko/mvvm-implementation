@@ -3,35 +3,21 @@ import ReactDOM from "react-dom";
 // import { observer } from "mobx-react";
 
 import "./styles.css";
-import booksRepository from "./Books/Books.repository";
+import booksController from "./controllers/BooksController";
+import BooksView from "./views/BooksView";
 
 function App() {
-  const [list, setList] = useState([]);
+  const [books, setBooks] = useState([]);
+
 
   React.useEffect(() => {
-    async function load() {
-      const books = await booksRepository.getBooks();
-      setList(books);
-    }
-    load();
+    booksController.initialize(setBooks);
   }, []);
 
-  return (
-    <div>
-      {list.map((book, i) => (
-        <div key={i}>
-          {book.author}: {book.name}
-        </div>
-      ))}
-      <button
-        onClick={() => {
-          alert("TBD");
-        }}
-      >
-        Add
-      </button>
-    </div>
-  );
+  return <BooksView
+    books={books}
+    onAddBook={booksController.handleAddBook}
+  />;
 }
 
 const ObservedApp = App;

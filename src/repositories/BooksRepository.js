@@ -1,4 +1,4 @@
-import ApiGateway from "../Shared/ApiGateway.js";
+import ApiGateway from "../services/ApiGateway.js";
 
 class BooksRepository {
   constructor() {
@@ -14,6 +14,7 @@ class BooksRepository {
     const bookAddDto = await this.httpGateway.post("/books", { name, author });
     return bookAddDto && bookAddDto.status === "ok" ? true : false;
   };
+
 }
 
 const booksRepository = new BooksRepository();
