@@ -1,28 +1,21 @@
 import React from "react";
+import { observer } from "mobx-react";
+import BookFormView from "./BookFormView";
+import BooksListView from "./BooksListView";
+import booksStore from "../stores/BooksStore";
 
-const BooksView = ({ books, isLoading, error, onAddBook }) => {
+const BooksView = () => {
+  const { showBookForm } = booksStore;
 
   return (
-    <div>
-      {isLoading && <div>Loading books...</div>}
-
-      {error && <div style={{ color: "red" }}>Error: {error}</div>}
-
-      {!isLoading && !error && books.length === 0 && (
-        <div>No books available</div>
+    <div className="books-container">
+      {showBookForm ? (
+        <BookFormView />
+      ) : (
+        <BooksListView />
       )}
-
-      {books.map((book, i) => (
-        <div key={i}>
-          {book.author}: {book.name}
-        </div>
-      ))}
-
-      <button onClick={onAddBook} disabled={isLoading}>
-        Add Book
-      </button>
     </div>
   );
 };
 
-export default BooksView;
+export default observer(BooksView);

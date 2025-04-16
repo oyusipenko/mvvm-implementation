@@ -4,15 +4,23 @@ class BooksStore {
   books = [];
   isLoading = false;
   error = null;
+  isSubmitting = false;
+  submissionError = null;
+  showBookForm = false;
 
   constructor() {
     makeObservable(this, {
       books: observable,
       isLoading: observable,
       error: observable,
+      isSubmitting: observable,
+      submissionError: observable,
+      showBookForm: observable,
       setBooks: action,
       setLoading: action,
-      setError: action
+      setError: action,
+      setSubmitting: action,
+      setSubmissionError: action,
     });
   }
 
@@ -26,6 +34,14 @@ class BooksStore {
 
   setError = (error) => {
     this.error = error;
+  };
+
+  setSubmitting = (submitting) => {
+    this.isSubmitting = submitting;
+  };
+
+  setSubmissionError = (error) => {
+    this.submissionError = error;
   };
 }
 
