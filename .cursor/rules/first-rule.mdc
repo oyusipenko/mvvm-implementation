@@ -1,0 +1,59 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Your rule content
+
+CodeStyle 
+Note: style guidelines are given in assumption MobX is used for reactivity. If another state-management library is used - some of the bullets are not viable.
+Files structure must account for splitting of the reusable components and feature-specific components.
+Every component that has logic (any branching is a logic) or requires an access to services/gateways, has its own controller for that purpose.
+If needed - use a global controller or store that only contains data which could be shared across the whole application e.g. userStore, uiStore etc.
+In View, there is only Mobx stores usage. All the logic should be in Controllers, View is only for rendering.
+Test logic is a must. Snapshot- and property- testing is optional
+Views are functional
+For local controllers - care about lifecycle and resources disposal
+Make sure we don’t have unnecessary renders caused by MobX reactivity (see runInAction doc function for details)
+Remove console.log, use console.debug in case if you need to leave it for debug purpose
+
+
+Refactoring target: Architecture pattern
+
+Naming is taken from the following scheme:
+Sure! Here's the English version of the same explanation, ready to be used in Cursor IDE:
+
+---
+
+### Architecture Pattern (MVP)
+
+This diagram illustrates an architecture that follows the **Model-View-Presenter (MVP)** pattern, consisting of the following components:
+
+- **View** – responsible for rendering the UI and capturing user actions.
+  - Receives a **VM (View Model)** as an observable object from the Controller.
+- **Controller** – handles user actions from the View.
+  - Sends and receives **PM (Programmer’s Model)** to/from the Repository.
+- **Repository** – manages access to data sources; this layer is optional and can be skipped if using services/gateways directly.
+  - Sends and receives **DTOs (Data Transfer Objects)** to/from the **services/gateways** layer.
+- **Services / Gateways** – interact with external systems such as APIs, databases, etc.
+
+> Terminology:
+> - **VM** – "View Model", the data formatted for presentation
+> - **PM** – "Programmer’s Model", internal domain models
+> - **DTO** – "Data Transfer Object", used for communication between layers
+
+**Note**: The Repository layer is optional. If not needed, the controller can interact with services/gateways directly.
+
+
+Requirements for refactoring
+The Basic requirement is to have the logic separated from the rendering, so that it’s possible to have test-on-logic. Logic means business, and the majority of UX. 
+Acceptance Criteria:
+Zero logic and calculations in TSX/JSX files - Use MVP (or, in other name, MVVM) pattern where the component transfers all the logic to the Controller. It’s Important to separate the View, and be able to test. The rest is less important. Any JS code besides connecting the Controller in View (JSX) is actually incorrect. 
+Use MobX to hold state and mobx-react for reactivity. In case you don’t know MobX - come up with your own solution to MVVM implementation.
+Implement books creation
+Cover logic with tests
+
+
+
+
